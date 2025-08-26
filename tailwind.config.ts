@@ -18,6 +18,9 @@ export default {
 			}
 		},
 		extend: {
+			fontFamily: {
+				poppins: ['Poppins', 'sans-serif'],
+			},
 			colors: {
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
@@ -27,6 +30,10 @@ export default {
 				primary: {
 					DEFAULT: 'hsl(var(--primary))',
 					foreground: 'hsl(var(--primary-foreground))'
+				},
+				heading: {
+					DEFAULT: 'hsl(var(--heading))',
+					foreground: 'hsl(var(--heading-foreground))'
 				},
 				secondary: {
 					DEFAULT: 'hsl(var(--secondary))',
