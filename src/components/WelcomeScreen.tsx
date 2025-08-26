@@ -15,11 +15,11 @@ const WelcomeScreen = ({ onStartChat }: WelcomeScreenProps) => {
           </div>
           
           <h1 className="text-5xl md:text-6xl font-bold text-heading mb-4 font-poppins">
-            ඔබේ සිංහල AI මිතුරා
+            ඔබේ සිංහල මිතුරා
           </h1>
           
           <p className="text-xl md:text-2xl text-muted-foreground mb-8 font-poppins">
-            සියලුම ගැටළු සඳහා කථා කරමු
+            කථා කරමු, උදව් කරමු, එකට ඉගෙන ගනිමු
           </p>
           
           <div className="flex items-center justify-center gap-4 mb-8 text-primary">

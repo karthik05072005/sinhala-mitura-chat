@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { ArrowLeft, Send } from "lucide-react";
 import MessageBubble from "./MessageBubble";
 import TypingIndicator from "./TypingIndicator";
+import { getChatResponse } from "@/lib/gemini";
 import { cn } from "@/lib/utils";
 
 interface Message {
@@ -21,7 +22,7 @@ const ChatInterface = ({ onBack }: ChatInterfaceProps) => {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: "welcome",
-      text: "ආයුබෝවන්! මම ඔබේ සිංහල AI මිතුරයා. ඔබට කුමක් දැන ගැනීමට අවශ්‍යද?",
+      text: "ආයුබෝවන්! මම ඔබේ සිංහල මිතුරයා. ඔබට කුමක් දැන ගැනීමට අවශ්‍යද? අපි කථා කරමු!",
       isUser: false,
       timestamp: new Date()
     }
@@ -44,20 +45,9 @@ const ChatInterface = ({ onBack }: ChatInterfaceProps) => {
     inputRef.current?.focus();
   }, []);
 
-  const simulateAIResponse = async (userMessage: string): Promise<string> => {
-    // Simulate API delay
-    await new Promise(resolve => setTimeout(resolve, 1000 + Math.random() * 2000));
-    
-    // Simple Sinhala responses for demo
-    const responses = [
-      "ඔබේ ප්‍රශ්නය ගැන මම සිතමින් සිටිමි. වැඩි විස්තර කියන්න.",
-      "එය සිත්ගන්නා කරුණක්! මට ඔබට උදව් කළ හැකි ආකාරය මොකක්ද?",
-      "සිංහල භාෂාවෙන් ඔබ සමඟ කතා කිරීම මට සතුටක්. තවත් කියන්න.",
-      "ඔබේ මතය අගය කරමි. වැඩි විස්තර සහිත උදාහරණයක් දෙන්න.",
-      "හොඳ ප්‍රශ්නයක්! මම ඔබට යම් යෝජනා කිහිපයක් දෙන්නම්."
-    ];
-    
-    return responses[Math.floor(Math.random() * responses.length)];
+  // Real Gemini API integration
+  const getAIResponse = async (userMessage: string): Promise<string> => {
+    return await getChatResponse(userMessage);
   };
 
   const handleSendMessage = async () => {
@@ -75,7 +65,7 @@ const ChatInterface = ({ onBack }: ChatInterfaceProps) => {
     setIsTyping(true);
 
     try {
-      const aiResponse = await simulateAIResponse(inputMessage);
+      const aiResponse = await getAIResponse(inputMessage);
       
       const botMessage: Message = {
         id: (Date.now() + 1).toString(),
@@ -89,7 +79,7 @@ const ChatInterface = ({ onBack }: ChatInterfaceProps) => {
       console.error("Error getting AI response:", error);
       const errorMessage: Message = {
         id: (Date.now() + 1).toString(),
-        text: "කණගාටුයි, දැන් මට පිළිතුරු දිය නොහැක. කරුණාකර නැවත උත්සාහ කරන්න.",
+        text: "කණගාටුයි, දැන් මට ඔබට සාකච්ඡා කිරීමට ටිකක් අපහසුයි. මොහොතකට පසුව නැවත උත්සාහ කරන්න.",
         isUser: false,
         timestamp: new Date()
       };
@@ -119,8 +109,8 @@ const ChatInterface = ({ onBack }: ChatInterfaceProps) => {
           <ArrowLeft className="w-4 h-4" />
         </Button>
         <div>
-          <h2 className="font-semibold text-heading font-poppins">සිංහල AI මිතුරා</h2>
-          <p className="text-sm text-muted-foreground font-poppins">සම්බන්ධිතයි</p>
+          <h2 className="font-semibold text-heading font-poppins">සිංහල මිතුරා</h2>
+          <p className="text-sm text-muted-foreground font-poppins">සම්බන්ධිතයි • සහයෝගී</p>
         </div>
       </div>
 
